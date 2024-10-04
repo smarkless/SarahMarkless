@@ -31,7 +31,7 @@ export const HomeCover = () => {
         animatedViewSize.value = withTiming(0, {
           duration: 1000,
         });
-        // setItem("hasVisited", "true");
+        runOnJS(() => setItem("hasVisited", "true"));
       }),
     []
   );
@@ -59,8 +59,8 @@ export const HomeCover = () => {
             });
             runOnJS(setHeading)("Gotcha!");
             runOnJS(setSubHeading)("Hold longer or tap to enter");
-            // } else {
-            //   setItem("hasVisited", "true");
+          } else {
+            setItem("hasVisited", "true");
           }
         }),
     []

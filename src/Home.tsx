@@ -1,8 +1,17 @@
 import { StyleSheet, Text, SafeAreaView, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { HomeCover } from "./HomeCover";
+import { useAsyncStorage } from "./utils/hooks";
+// import { getItem, setItem } from "./utils/localStorage";
 
 export const Home = () => {
+  const { getItem, setItem } = useAsyncStorage("hasVisited");
+  const hasVisited = getItem();
+  setItem("true");
+  const hasThing = getItem();
+
+  console.log({ hasVisited });
+  console.log({ hasThing });
   return (
     <GestureHandlerRootView>
       <View style={styles.container}>
