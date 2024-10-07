@@ -6,14 +6,23 @@ import Animated, {
   withSpring,
   withTiming,
 } from "react-native-reanimated";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { GestureDetector, Gesture } from "react-native-gesture-handler";
 import { useCallback, useState } from "react";
-import { setItem } from "./utils/localStorage";
 
 const { height, width } = Dimensions.get("window");
 const initialBackgroundHeight = height / 2;
 const initialCircleHeight = width * 0.7;
+
+const storeData = async () => {
+  try {
+    await AsyncStorage.setItem("hasVisited", "true");
+    console.log("Data stored successfully!");
+  } catch (e) {
+    console.error("Failed to store data", e);
+  }
+};
 
 export const HomeCover = () => {
   const [heading, setHeading] = useState("Welcome");
@@ -31,7 +40,7 @@ export const HomeCover = () => {
         animatedViewSize.value = withTiming(0, {
           duration: 1000,
         });
-        // setItem("hasVisited", "true");
+        runOnJS(storeData)();
       }),
     []
   );
@@ -59,8 +68,8 @@ export const HomeCover = () => {
             });
             runOnJS(setHeading)("Gotcha!");
             runOnJS(setSubHeading)("Hold longer or tap to enter");
-            // } else {
-            //   setItem("hasVisited", "true");
+          } else {
+            runOnJS(storeData)();
           }
         }),
     []
