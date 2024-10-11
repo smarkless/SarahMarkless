@@ -1,14 +1,22 @@
-import { StyleSheet, Text, SafeAreaView, View } from "react-native";
+import { StyleSheet, Text, SafeAreaView, View, Button } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { HomeCover } from "./HomeCover";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-export const Home = () => {
+export interface GenericNavigatorParamList {
+  [key: string]: undefined;
+}
+
+export const Home = ({
+  navigation,
+}: {
+  navigation: NativeStackNavigationProp<GenericNavigatorParamList>;
+}) => {
   const [hasVisited, setHasVisited] = useState<boolean>();
   useEffect(() => {
     AsyncStorage.getItem("hasVisited").then((value) => {
-      console.log({ value });
       setHasVisited(value === "true");
     });
   }, []);
@@ -22,6 +30,10 @@ export const Home = () => {
         <SafeAreaView style={styles.innerContainer}>
           <Text style={styles.text}>Sarah Markless</Text>
           <Text>Blah blach blach blahsufhsud saaio ushfli</Text>
+          <Button
+            title="Piggybank POC"
+            onPress={() => navigation.navigate("Piggybank")}
+          />
         </SafeAreaView>
       </View>
     </GestureHandlerRootView>

@@ -18,7 +18,6 @@ const initialCircleHeight = width * 0.7;
 const storeData = async () => {
   try {
     await AsyncStorage.setItem("hasVisited", "true");
-    console.log("Data stored successfully!");
   } catch (e) {
     console.error("Failed to store data", e);
   }
